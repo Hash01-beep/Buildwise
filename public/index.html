@@ -1,1 +1,3737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="description" content="BuildWise - Construction calculators, structural analysis, property inspection, DIY guides, safety, materials, planning and construction AI.">
+<meta name="theme-color" content="#07111f">
+<title>BuildWise | Construction, Property & DIY Intelligence</title>
 
+<style>
+:root{
+  --bg:#050b15;
+  --bg2:#091426;
+  --card:#0d1a2d;
+  --card2:#12233b;
+  --text:#f5f9ff;
+  --muted:#91a4bd;
+  --cyan:#22d3ee;
+  --blue:#3b82f6;
+  --violet:#8b5cf6;
+  --green:#22c55e;
+  --yellow:#facc15;
+  --red:#ef4444;
+  --orange:#fb923c;
+  --line:rgba(255,255,255,.10);
+  --shadow:0 20px 70px rgba(0,0,0,.38);
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+
+html{scroll-behavior:smooth}
+
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:Arial,Helvetica,sans-serif;
+  line-height:1.6;
+  overflow-x:hidden;
+}
+
+body:before{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:-5;
+  background:
+  linear-gradient(rgba(34,211,238,.035) 1px,transparent 1px),
+  linear-gradient(90deg,rgba(34,211,238,.035) 1px,transparent 1px);
+  background-size:42px 42px;
+  animation:gridMove 18s linear infinite;
+}
+
+body:after{
+  content:"";
+  position:fixed;
+  width:500px;
+  height:500px;
+  border-radius:50%;
+  right:-250px;
+  top:80px;
+  background:linear-gradient(135deg,var(--cyan),var(--violet));
+  filter:blur(150px);
+  opacity:.09;
+  z-index:-4;
+  animation:orb 9s ease-in-out infinite alternate;
+}
+
+@keyframes gridMove{
+  from{background-position:0 0}
+  to{background-position:42px 42px}
+}
+
+@keyframes orb{
+  from{transform:translate(0,0) scale(1)}
+  to{transform:translate(-100px,100px) scale(1.25)}
+}
+
+@keyframes float{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-10px)}
+}
+
+@keyframes pulse{
+  0%,100%{box-shadow:0 0 0 0 rgba(34,211,238,.25)}
+  50%{box-shadow:0 0 0 15px rgba(34,211,238,0)}
+}
+
+@keyframes gradient{
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+
+@keyframes reveal{
+  from{opacity:0;transform:translateY(35px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+@keyframes pop{
+  from{opacity:0;transform:scale(.92)}
+  to{opacity:1;transform:scale(1)}
+}
+
+@keyframes scan{
+  0%{left:-100%}
+  100%{left:100%}
+}
+
+@keyframes typing{
+  0%,100%{opacity:.25}
+  50%{opacity:1}
+}
+
+.container{
+  width:min(1200px,92%);
+  margin:auto;
+}
+
+a{
+  text-decoration:none;
+  color:inherit;
+}
+
+button,input,select,textarea{
+  font:inherit;
+}
+
+button{cursor:pointer}
+
+/* NAV */
+
+header{
+  position:sticky;
+  top:0;
+  z-index:999;
+  background:rgba(5,11,21,.82);
+  backdrop-filter:blur(18px);
+  border-bottom:1px solid var(--line);
+}
+
+.nav{
+  min-height:72px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.logo{
+  font-size:25px;
+  font-weight:900;
+  letter-spacing:-1px;
+}
+
+.logo span{
+  background:linear-gradient(90deg,var(--cyan),var(--blue),var(--violet),var(--green));
+  background-size:300%;
+  -webkit-background-clip:text;
+  color:transparent;
+  animation:gradient 5s ease infinite;
+}
+
+nav{
+  display:flex;
+  gap:18px;
+  align-items:center;
+}
+
+nav a{
+  color:var(--muted);
+  font-size:13px;
+  transition:.3s;
+}
+
+nav a:hover{
+  color:var(--cyan);
+  text-shadow:0 0 18px rgba(34,211,238,.4);
+}
+
+.menu{
+  display:none;
+  border:0;
+  background:none;
+  color:white;
+  font-size:27px;
+}
+
+/* HERO */
+
+.hero{
+  min-height:720px;
+  display:flex;
+  align-items:center;
+  position:relative;
+}
+
+.hero-content{
+  max-width:850px;
+  animation:float 6s ease-in-out infinite;
+}
+
+.badge{
+  display:inline-block;
+  padding:8px 15px;
+  border-radius:50px;
+  background:rgba(34,211,238,.07);
+  border:1px solid rgba(34,211,238,.35);
+  color:var(--cyan);
+  font-size:12px;
+  margin-bottom:20px;
+  animation:pulse 3s infinite;
+}
+
+h1{
+  font-size:clamp(45px,7vw,78px);
+  line-height:1;
+  letter-spacing:-3px;
+  margin-bottom:25px;
+}
+
+.gradient{
+  background:linear-gradient(90deg,var(--cyan),var(--blue),var(--violet),var(--green));
+  background-size:300%;
+  -webkit-background-clip:text;
+  color:transparent;
+  animation:gradient 5s ease infinite;
+}
+
+.hero p{
+  color:var(--muted);
+  font-size:18px;
+  max-width:760px;
+  margin-bottom:28px;
+}
+
+.actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+}
+
+.btn{
+  position:relative;
+  overflow:hidden;
+  border:0;
+  border-radius:11px;
+  padding:12px 19px;
+  font-weight:800;
+  transition:.3s;
+}
+
+.btn:after{
+  content:"";
+  position:absolute;
+  width:80px;
+  top:0;
+  bottom:0;
+  left:-120px;
+  transform:skewX(-20deg);
+  background:rgba(255,255,255,.22);
+  transition:.5s;
+}
+
+.btn:hover:after{left:130%}
+
+.primary{
+  background:linear-gradient(135deg,var(--cyan),var(--blue));
+  color:#021019;
+  box-shadow:0 12px 35px rgba(34,211,238,.17);
+}
+
+.primary:hover{
+  transform:translateY(-4px);
+  box-shadow:0 18px 45px rgba(34,211,238,.28);
+}
+
+.secondary{
+  background:rgba(255,255,255,.05);
+  color:white;
+  border:1px solid var(--line);
+}
+
+.secondary:hover{
+  transform:translateY(-4px);
+  border-color:var(--cyan);
+}
+
+/* SECTIONS */
+
+section{
+  padding:85px 0;
+}
+
+.heading{
+  margin-bottom:30px;
+}
+
+.heading h2{
+  font-size:38px;
+  line-height:1.15;
+  margin-bottom:8px;
+}
+
+.heading p{
+  color:var(--muted);
+  max-width:850px;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:18px;
+}
+
+.card{
+  position:relative;
+  overflow:hidden;
+  padding:24px;
+  border-radius:18px;
+  background:linear-gradient(145deg,rgba(13,26,45,.96),rgba(8,17,31,.96));
+  border:1px solid var(--line);
+  box-shadow:var(--shadow);
+  transition:.35s;
+}
+
+.card:before{
+  content:"";
+  position:absolute;
+  top:0;
+  left:-100%;
+  width:100%;
+  height:2px;
+  background:linear-gradient(90deg,transparent,var(--cyan),var(--violet),transparent);
+  animation:scan 5s linear infinite;
+}
+
+.card:hover{
+  transform:translateY(-8px);
+  border-color:rgba(34,211,238,.38);
+}
+
+.icon{
+  font-size:35px;
+  margin-bottom:8px;
+}
+
+.card h3{
+  margin-bottom:7px;
+}
+
+.card p{
+  color:var(--muted);
+  font-size:14px;
+}
+
+/* LAUNCHER */
+
+.launcher{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:12px;
+}
+
+.launch{
+  padding:20px 15px;
+  border-radius:16px;
+  border:1px solid var(--line);
+  background:var(--card);
+  text-align:center;
+  transition:.3s;
+}
+
+.launch:hover{
+  transform:translateY(-7px);
+  border-color:var(--cyan);
+  box-shadow:0 15px 45px rgba(34,211,238,.10);
+}
+
+.launch .emoji{
+  font-size:30px;
+  margin-bottom:7px;
+}
+
+.launch small{
+  display:block;
+  color:var(--muted);
+  margin-top:4px;
+}
+
+/* TOOLS */
+
+.tool-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:13px;
+}
+
+.tool{
+  position:relative;
+  overflow:hidden;
+  padding:18px;
+  border-radius:15px;
+  background:rgba(13,26,45,.9);
+  border:1px solid var(--line);
+  transition:.3s;
+  cursor:pointer;
+}
+
+.tool:hover{
+  transform:translateY(-6px) scale(1.01);
+  border-color:var(--cyan);
+}
+
+.tool b{
+  display:block;
+  margin-bottom:3px;
+}
+
+.tool small{
+  color:var(--muted);
+}
+
+.panel{
+  margin-top:22px;
+  padding:25px;
+  border-radius:20px;
+  background:linear-gradient(145deg,rgba(13,26,45,.98),rgba(7,15,29,.98));
+  border:1px solid var(--line);
+  box-shadow:var(--shadow);
+  animation:pop .4s ease;
+}
+
+.form{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px;
+}
+
+label{
+  display:block;
+  color:var(--muted);
+  font-size:12px;
+  margin-bottom:5px;
+}
+
+input,select,textarea{
+  width:100%;
+  border:1px solid var(--line);
+  border-radius:9px;
+  padding:11px;
+  background:#050c19;
+  color:white;
+  outline:none;
+}
+
+input:focus,select:focus,textarea:focus{
+  border-color:var(--cyan);
+  box-shadow:0 0 0 3px rgba(34,211,238,.08);
+}
+
+.result{
+  margin-top:18px;
+  padding:18px;
+  border-radius:13px;
+  background:linear-gradient(135deg,rgba(34,211,238,.07),rgba(34,197,94,.06));
+  border:1px solid rgba(34,211,238,.20);
+  animation:pop .4s ease;
+}
+
+.result strong{
+  color:var(--green);
+  font-size:21px;
+}
+
+/* DASHBOARD */
+
+.dashboard{
+  display:grid;
+  grid-template-columns:1.3fr .7fr;
+  gap:18px;
+}
+
+.stat-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
+}
+
+.stat{
+  padding:20px;
+  border:1px solid var(--line);
+  border-radius:15px;
+  background:var(--card);
+}
+
+.stat .number{
+  font-size:30px;
+  font-weight:900;
+  color:var(--cyan);
+}
+
+/* CHECKLIST */
+
+.checklist{
+  display:grid;
+  gap:9px;
+}
+
+.check{
+  display:flex;
+  gap:10px;
+  align-items:flex-start;
+  padding:13px;
+  border-radius:10px;
+  background:rgba(255,255,255,.035);
+  border:1px solid var(--line);
+  transition:.25s;
+}
+
+.check:hover{
+  border-color:var(--cyan);
+}
+
+.check input{
+  width:auto;
+  margin-top:4px;
+  accent-color:var(--cyan);
+}
+
+/* RISK */
+
+.risk-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:15px;
+}
+
+.risk-card{
+  padding:20px;
+  border-radius:15px;
+  background:var(--card);
+  border:1px solid var(--line);
+}
+
+.risk-card p,.risk-card li{
+  color:var(--muted);
+  font-size:14px;
+}
+
+.matrix{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:5px;
+  margin-top:15px;
+}
+
+.matrix div{
+  height:43px;
+  display:grid;
+  place-items:center;
+  border-radius:5px;
+  background:#18253a;
+  font-size:12px;
+  transition:.25s;
+}
+
+.matrix div:hover{
+  transform:scale(1.08);
+}
+
+.low{background:rgba(34,197,94,.3)!important}
+.medium{background:rgba(250,204,21,.3)!important}
+.high{background:rgba(239,68,68,.35)!important}
+
+/* GUIDES */
+
+.guide-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:16px;
+}
+
+.guide{
+  padding:22px;
+  border-radius:17px;
+  background:var(--card);
+  border:1px solid var(--line);
+}
+
+.guide h3{
+  margin-bottom:12px;
+}
+
+.steps{
+  display:grid;
+  gap:11px;
+}
+
+.step{
+  display:flex;
+  gap:12px;
+}
+
+.num{
+  min-width:36px;
+  height:36px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  background:linear-gradient(135deg,var(--cyan),var(--violet));
+  color:#03101b;
+  font-weight:900;
+}
+
+/* AI */
+
+.ai{
+  border-radius:22px;
+  padding:22px;
+  background:
+  linear-gradient(145deg,rgba(34,211,238,.07),rgba(139,92,246,.08)),
+  var(--card);
+  border:1px solid var(--line);
+  box-shadow:var(--shadow);
+}
+
+.ai-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
+  margin-bottom:15px;
+}
+
+.ai-status{
+  color:var(--green);
+  font-size:12px;
+}
+
+.chat{
+  height:420px;
+  overflow-y:auto;
+  padding:10px;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  background:rgba(0,0,0,.12);
+  border-radius:15px;
+}
+
+.msg{
+  max-width:88%;
+  padding:13px 16px;
+  border-radius:15px;
+  font-size:14px;
+  animation:pop .3s ease;
+}
+
+.msg.bot{
+  align-self:flex-start;
+  background:#17243a;
+  border:1px solid var(--line);
+}
+
+.msg.user{
+  align-self:flex-end;
+  background:linear-gradient(135deg,#075985,#164e63);
+}
+
+.suggestions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:7px;
+  margin:12px 0;
+}
+
+.suggestion{
+  border:1px solid var(--line);
+  background:rgba(255,255,255,.04);
+  color:#d9e7f8;
+  border-radius:30px;
+  padding:7px 11px;
+  font-size:12px;
+}
+
+.suggestion:hover{
+  border-color:var(--cyan);
+}
+
+.ask{
+  display:flex;
+  gap:9px;
+  margin-top:12px;
+}
+
+/* FAQ */
+
+.faq{
+  border:1px solid var(--line);
+  border-radius:13px;
+  overflow:hidden;
+  margin-bottom:9px;
+  background:var(--card);
+}
+
+.faq button{
+  width:100%;
+  border:0;
+  background:var(--card);
+  color:white;
+  text-align:left;
+  padding:15px;
+  font-weight:700;
+}
+
+.faq-answer{
+  display:none;
+  padding:15px;
+  color:var(--muted);
+  background:#081323;
+  font-size:14px;
+}
+
+.faq.open .faq-answer{
+  display:block;
+  animation:pop .25s ease;
+}
+
+/* SEARCH */
+
+.search{
+  margin-bottom:18px;
+}
+
+.search input{
+  padding:15px;
+  font-size:15px;
+}
+
+/* NOTICE */
+
+.notice{
+  margin-top:18px;
+  padding:14px 16px;
+  border-left:4px solid var(--yellow);
+  background:rgba(250,204,21,.055);
+  color:#d5c98e;
+  font-size:13px;
+  border-radius:5px;
+}
+
+/* FOOTER */
+
+footer{
+  padding:55px 0;
+  border-top:1px solid var(--line);
+  background:#020711;
+}
+
+.footer-grid{
+  display:grid;
+  grid-template-columns:2fr 1fr 1fr;
+  gap:30px;
+}
+
+footer p,footer li{
+  color:var(--muted);
+  font-size:13px;
+  margin-bottom:5px;
+}
+
+.reveal{
+  opacity:0;
+  transform:translateY(30px);
+  transition:.8s ease;
+}
+
+.reveal.show{
+  opacity:1;
+  transform:translateY(0);
+}
+
+/* TOAST */
+
+.toast{
+  position:fixed;
+  right:18px;
+  bottom:18px;
+  z-index:9999;
+  padding:13px 17px;
+  border-radius:10px;
+  background:#13243b;
+  border:1px solid var(--cyan);
+  box-shadow:var(--shadow);
+  opacity:0;
+  transform:translateY(20px);
+  pointer-events:none;
+  transition:.3s;
+}
+
+.toast.show{
+  opacity:1;
+  transform:translateY(0);
+}
+
+/* PARTICLES */
+
+.particle{
+  position:fixed;
+  width:3px;
+  height:3px;
+  border-radius:50%;
+  background:var(--cyan);
+  opacity:.35;
+  z-index:-1;
+  animation:particle 12s linear infinite;
+}
+
+@keyframes particle{
+  from{
+    transform:translateY(110vh);
+    opacity:0;
+  }
+  20%{opacity:.5}
+  80%{opacity:.5}
+  to{
+    transform:translateY(-10vh);
+    opacity:0;
+  }
+}
+
+/* RESPONSIVE */
+
+@media(max-width:1000px){
+
+.launcher{
+  grid-template-columns:repeat(3,1fr);
+}
+
+.grid,.risk-grid{
+  grid-template-columns:repeat(2,1fr);
+}
+
+.tool-grid{
+  grid-template-columns:repeat(2,1fr);
+}
+
+.dashboard{
+  grid-template-columns:1fr;
+}
+
+}
+
+@media(max-width:680px){
+
+nav{
+  display:none;
+  position:absolute;
+  left:0;
+  right:0;
+  top:72px;
+  padding:20px;
+  background:#050b15;
+  border-bottom:1px solid var(--line);
+  flex-direction:column;
+  align-items:flex-start;
+}
+
+nav.open{
+  display:flex;
+  animation:pop .25s ease;
+}
+
+.menu{
+  display:block;
+}
+
+.hero{
+  min-height:620px;
+}
+
+h1{
+  font-size:48px;
+}
+
+section{
+  padding:65px 0;
+}
+
+.grid,
+.risk-grid,
+.guide-grid,
+.footer-grid{
+  grid-template-columns:1fr;
+}
+
+.tool-grid,
+.launcher{
+  grid-template-columns:repeat(2,1fr);
+}
+
+.form{
+  grid-template-columns:1fr;
+}
+
+.ask{
+  flex-direction:column;
+}
+
+.ai-top{
+  align-items:flex-start;
+  flex-direction:column;
+}
+
+.heading h2{
+  font-size:31px;
+}
+
+}
+
+@media(max-width:420px){
+
+.tool-grid,.launcher{
+  grid-template-columns:1fr;
+}
+
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<div class="container nav">
+
+<div class="logo">Build<span>Wise</span></div>
+
+<button class="menu" onclick="toggleNav()">☰</button>
+
+<nav id="nav">
+<a href="#home">Home</a>
+<a href="#start">Start</a>
+<a href="#tools">Tools</a>
+<a href="#structure">Structure</a>
+<a href="#safety">Safety</a>
+<a href="#property">Property</a>
+<a href="#diy">DIY</a>
+<a href="#ai">Ask AI</a>
+</nav>
+
+</div>
+</header>
+
+
+<!-- HERO -->
+
+<section class="hero" id="home">
+<div class="container">
+
+<div class="hero-content reveal">
+
+<div class="badge">
+🏗 Construction • Civil • Property • DIY • Safety • AI
+</div>
+
+<h1>
+Build Smarter.<br>
+Know More. <span class="gradient">BuildWise.</span>
+</h1>
+
+<p>
+A practical construction intelligence platform for calculations,
+engineering concepts, project planning, property inspection,
+DIY guidance, safety and modern construction technology.
+</p>
+
+<div class="actions">
+<a href="#start" class="btn primary">🚀 Start Here</a>
+<a href="#tools" class="btn secondary">🧮 Explore Tools</a>
+<a href="#ai" class="btn secondary">🤖 Ask BuildWise AI</a>
+</div>
+
+</div>
+</div>
+</section>
+
+
+<!-- QUICK START -->
+
+<section id="start">
+<div class="container">
+
+<div class="heading reveal">
+<h2>What are you trying to do?</h2>
+<p>Choose your goal and jump directly to the useful part of BuildWise.</p>
+</div>
+
+<div class="launcher">
+
+<a href="#tools" class="launch reveal">
+<div class="emoji">🏗️</div>
+<b>Build</b>
+<small>Calculate & plan</small>
+</a>
+
+<a href="#property" class="launch reveal">
+<div class="emoji">🏠</div>
+<b>Buy Property</b>
+<small>Inspect & compare</small>
+</a>
+
+<a href="#diy" class="launch reveal">
+<div class="emoji">🔨</div>
+<b>DIY</b>
+<small>Fix & improve</small>
+</a>
+
+<a href="#safety" class="launch reveal">
+<div class="emoji">🦺</div>
+<b>Work Safely</b>
+<small>Assess risks</small>
+</a>
+
+<a href="#ai" class="launch reveal">
+<div class="emoji">🤖</div>
+<b>Ask AI</b>
+<small>Get guidance</small>
+</a>
+
+</div>
+
+</div>
+</section>
+
+
+<!-- FEATURES -->
+
+<section>
+<div class="container">
+
+<div class="heading reveal">
+<h2>One Platform, Many Construction Problems</h2>
+<p>Built around the questions users actually face before, during and after construction.</p>
+</div>
+
+<div class="grid">
+
+<div class="card reveal">
+<div class="icon">🧮</div>
+<h3>Smart Calculators</h3>
+<p>Concrete, bricks, excavation, flooring, paint, steel, geometry and unit conversion.</p>
+</div>
+
+<div class="card reveal">
+<div class="icon">🏗️</div>
+<h3>Structural Concepts</h3>
+<p>Beam reactions, bending moment, deflection, columns, bearing pressure and factor of safety.</p>
+</div>
+
+<div class="card reveal">
+<div class="icon">🦺</div>
+<h3>Risk & Safety</h3>
+<p>Hazard identification, likelihood, severity, controls, PPE and residual risk.</p>
+</div>
+
+<div class="card reveal">
+<div class="icon">🏠</div>
+<h3>Property Intelligence</h3>
+<p>Technical inspection, documents, drainage, structure, utilities and hidden warning signs.</p>
+</div>
+
+<div class="card reveal">
+<div class="icon">🔨</div>
+<h3>DIY Decision Support</h3>
+<p>Know what you can reasonably do yourself and when professional help is needed.</p>
+</div>
+
+<div class="card reveal">
+<div class="icon">🤖</div>
+<h3>Construction AI</h3>
+<p>Ask construction, civil, property, safety, material and DIY questions.</p>
+</div>
+
+</div>
+</div>
+</section>
+
+
+<!-- DASHBOARD -->
+
+<section>
+<div class="container">
+
+<div class="heading reveal">
+<h2>⚡ BuildWise Dashboard</h2>
+<p>Your browser can remember selected checklist progress and recently used tools.</p>
+</div>
+
+<div class="dashboard">
+
+<div class="card reveal">
+<h3>Project Progress</h3>
+<p style="margin-bottom:15px">
+Use the checklist below to track basic project preparation.
+</p>
+
+<div class="checklist">
+
+<label class="check">
+<input type="checkbox" data-save="scope">
+<span>Project scope and requirements understood</span>
+</label>
+
+<label class="check">
+<input type="checkbox" data-save="drawings">
+<span>Drawings/specifications reviewed</span>
+</label>
+
+<label class="check">
+<input type="checkbox" data-save="site">
+<span>Site conditions investigated</span>
+</label>
+
+<label class="check">
+<input type="checkbox" data-save="risk">
+<span>Initial risk assessment prepared</span>
+</label>
+
+<label class="check">
+<input type="checkbox" data-save="estimate">
+<span>Quantity/estimate checked</span>
+</label>
+
+<label class="check">
+<input type="checkbox" data-save="quality">
+<span>Quality inspection plan considered</span>
+</label>
+
+</div>
+</div>
+
+<div class="stat-grid">
+
+<div class="stat reveal">
+<div class="number" id="progressNumber">0%</div>
+<small>Checklist progress</small>
+</div>
+
+<div class="stat reveal">
+<div class="number">25+</div>
+<small>Knowledge topics</small>
+</div>
+
+<div class="stat reveal">
+<div class="number">10+</div>
+<small>Interactive tools</small>
+</div>
+
+<div class="stat reveal">
+<div class="number">24/7</div>
+<small>Browser access</small>
+</div>
+
+</div>
+
+</div>
+</div>
+</section>
+
+
+<!-- CALCULATORS -->
+
+<section id="tools">
+<div class="container">
+
+<div class="heading reveal">
+<h2>🧮 Construction Calculators</h2>
+<p>Enter measurements, select units and get an immediate result with the basic formula.</p>
+</div>
+
+<div class="tool-grid">
+
+<div class="tool" onclick="openTool('concrete')">
+<b>🧱 Concrete</b>
+<small>Volume + wastage</small>
+</div>
+
+<div class="tool" onclick="openTool('brick')">
+<b>🧱 Bricks</b>
+<small>Wall quantity</small>
+</div>
+
+<div class="tool" onclick="openTool('excavation')">
+<b>⛏ Excavation</b>
+<small>Earth volume</small>
+</div>
+
+<div class="tool" onclick="openTool('area')">
+<b>📐 Area / Volume</b>
+<small>Geometry</small>
+</div>
+
+<div class="tool" onclick="openTool('paint')">
+<b>🎨 Paint</b>
+<small>Coverage + coats</small>
+</div>
+
+<div class="tool" onclick="openTool('floor')">
+<b>⬛ Flooring</b>
+<small>Area + wastage</small>
+</div>
+
+<div class="tool" onclick="openTool('steel')">
+<b>🔩 Rebar Weight</b>
+<small>Diameter + length</small>
+</div>
+
+<div class="tool" onclick="openTool('unit')">
+<b>🔄 Unit Converter</b>
+<small>Metric + Imperial</small>
+</div>
+
+</div>
+
+<div class="panel" id="calculatorPanel">
+
+<h3 id="calculatorTitle">Choose a calculator</h3>
+
+<div id="calculatorBody">
+<p style="color:var(--muted);margin-top:7px">
+Select one of the calculators above.
+</p>
+</div>
+
+</div>
+
+</div>
+</section>
+
+
+<!-- STRUCTURE -->
+
+<section id="structure">
+<div class="container">
+
+<div class="heading reveal">
+<h2>🏗 Structural Analysis</h2>
+<p>Interactive educational tools for understanding structural behaviour and engineering concepts.</p>
+</div>
+
+<div class="tool-grid">
+
+<div class="tool" onclick="openStructure('beam')">
+<b>📊 Beam Reactions</b>
+<small>Simply supported beam</small>
+</div>
+
+<div class="tool" onclick="openStructure('moment')">
+<b>〰 Bending Moment</b>
+<small>Point load example</small>
+</div>
+
+<div class="tool" onclick="openStructure('deflection')">
+<b>↕ Deflection</b>
+<small>Elastic beam estimate</small>
+</div>
+
+<div class="tool" onclick="openStructure('column')">
+<b>🏢 Column</b>
+<small>Stress + slenderness</small>
+</div>
+
+<div class="tool" onclick="openStructure('fos')">
+<b>🛡 Factor of Safety</b>
+<small>Capacity / demand</small>
+</div>
+
+<div class="tool" onclick="openStructure('bearing')">
+<b>🌍 Bearing Pressure</b>
+<small>Foundation pressure</small>
+</div>
+
+</div>
+
+<div class="panel" id="structurePanel">
+
+<h3 id="structureTitle">Choose a structural tool</h3>
+
+<div id="structureBody">
+<p style="color:var(--muted)">
+Select a tool above.
+</p>
+</div>
+
+</div>
+
+<div class="notice">
+<strong>Important:</strong>
+These are educational/preliminary calculations. Actual structural design
+requires project-specific information, applicable codes, drawings,
+loads, material properties, soil data and professional verification.
+</div>
+
+</div>
+</section>
+
+
+<!-- SAFETY -->
+
+<section id="safety">
+<div class="container">
+
+<div class="heading reveal">
+<h2>🦺 Safety & Risk Assessment</h2>
+<p>Use the hierarchy of controls rather than relying on PPE alone.</p>
+</div>
+
+<div class="panel reveal">
+
+<div class="form">
+
+<div>
+<label>Hazard</label>
+<input id="hazard" placeholder="e.g. Working at height">
+</div>
+
+<div>
+<label>Likelihood</label>
+<select id="likelihood">
+<option value="1">1 — Rare</option>
+<option value="2">2 — Unlikely</option>
+<option value="3">3 — Possible</option>
+<option value="4">4 — Likely</option>
+<option value="5">5 — Almost Certain</option>
+</select>
+</div>
+
+<div>
+<label>Severity</label>
+<select id="severity">
+<option value="1">1 — Minor</option>
+<option value="2">2 — Moderate</option>
+<option value="3">3 — Serious</option>
+<option value="4">4 — Major</option>
+<option value="5">5 — Catastrophic</option>
+</select>
+</div>
+
+</div>
+
+<br>
+
+<button class="btn primary" onclick="riskAssessment()">Analyze Risk</button>
+
+<div id="riskResult"></div>
+
+</div>
+
+<div class="risk-grid" style="margin-top:20px">
+
+<div class="risk-card reveal">
+<h3>1. Identify</h3>
+<p>Activity → hazard → people exposed → existing controls.</p>
+</div>
+
+<div class="risk-card reveal">
+<h3>2. Assess</h3>
+<p>Estimate likelihood and severity, then determine the risk level.</p>
+</div>
+
+<div class="risk-card reveal">
+<h3>3. Control</h3>
+<p>Eliminate → substitute → engineer → administrative controls → PPE.</p>
+</div>
+
+</div>
+
+</div>
+</section>
+
+
+<!-- CONSTRUCTION GUIDES -->
+
+<section>
+<div class="container">
+
+<div class="heading reveal">
+<h2>📚 How to Approach a Construction Process</h2>
+<p>A generic workflow that can be adapted to different construction activities.</p>
+</div>
+
+<div class="guide-grid">
+
+<div class="guide reveal">
+<h3>🏗 Before Starting Work</h3>
+
+<div class="steps">
+
+<div class="step">
+<div class="num">1</div>
+<div>Understand drawings, specifications and scope.</div>
+</div>
+
+<div class="step">
+<div class="num">2</div>
+<div>Check site conditions, access and existing services.</div>
+</div>
+
+<div class="step">
+<div class="num">3</div>
+<div>Identify hazards and prepare controls.</div>
+</div>
+
+<div class="step">
+<div class="num">4</div>
+<div>Confirm materials, manpower, tools and sequence.</div>
+</div>
+
+</div>
+</div>
+
+<div class="guide reveal">
+<h3>🔍 During Work</h3>
+
+<div class="steps">
+
+<div class="step">
+<div class="num">1</div>
+<div>Follow the approved method and sequence.</div>
+</div>
+
+<div class="step">
+<div class="num">2</div>
+<div>Inspect dimensions, levels and workmanship.</div>
+</div>
+
+<div class="step">
+<div class="num">3</div>
+<div>Record changes, issues and material usage.</div>
+</div>
+
+<div class="step">
+<div class="num">4</div>
+<div>Stop unsafe work and correct defects.</div>
+</div>
+
+</div>
+</div>
+
+</div>
+</div>
+</section>
+
+
+<!-- PROPERTY -->
+
+<section id="property">
+<div class="container">
+
+<div class="heading reveal">
+<h2>🏠 Property Buying & Inspection</h2>
+<p>Price and appearance are only part of a property decision. Check technical, documentary and environmental factors.</p>
+</div>
+
+<div class="grid">
+
+<div class="card reveal">
+<div class="icon">📜</div>
+<h3>Documents</h3>
+<p>Verify ownership, approvals, applicable restrictions and relevant records with the appropriate authorities/professionals.</p>
+</div>
+
+<div class="card reveal">
+<div class="icon">🏗️</div>
+<h3>Structure</h3>
+<p>Look for significant cracks, settlement signs, corrosion, water damage and undocumented structural changes.</p>
+</div>
+
+<div class="card reveal">
+<div class="icon">💧</div>
+<h3>Water & Dampness</h3>
+<p>Inspect roof drainage, plumbing leaks, damp walls, waterproofing and standing water.</p>
+</div>
+
+<div class="card reveal">
+<div class="icon">⚡</div>
+<h3>Utilities</h3>
+<p>Check visible electrical, water, gas and other service installations for obvious defects.</p>
+</div>
+
+<div class="card reveal">
+<div class="icon">🌧️</div>
+<h3>Environment</h3>
+<p>Consider drainage, flood exposure, heat, erosion, pollution, noise and surrounding development.</p>
+</div>
+
+<div class="card reveal">
+<div class="icon">💰</div>
+<h3>Lifecycle Cost</h3>
+<p>Consider repairs, maintenance, utilities, renovation and replacement costs—not only purchase price.</p>
+</div>
+
+</div>
+
+<div class="panel reveal">
+
+<h3>🏠 Property Quick Inspection Checklist</h3>
+
+<div class="checklist" style="margin-top:15px">
+
+<label class="check">
+<input type="checkbox" data-save="prop-doc">
+<span>Ownership and relevant property documents checked</span>
+</label>
+
+<label class="check">
+<input type="checkbox" data-save="prop-cracks">
+<span>Major visible cracks or structural distress investigated</span>
+</label>
+
+<label class="check">
+<input type="checkbox" data-save="prop-roof">
+<span>Roof and rainwater drainage inspected</span>
+</label>
+
+<label class="check">
+<input type="checkbox" data-save="prop-damp">
+<span>Dampness and leakage checked</span>
+</label>
+
+<label class="check">
+<input type="checkbox" data-save="prop-services">
+<span>Visible utilities and service connections checked</span>
+</label>
+
+<label class="check">
+<input type="checkbox" data-save="prop-area">
+<span>Surrounding access, drainage and environment considered</span>
+</label>
+
+</div>
+
+</div>
+
+</div>
+</section>
+
+
+<!-- DIY -->
+
+<section id="diy">
+<div class="container">
+
+<div class="heading reveal">
+<h2>🔨 DIY Construction & Home Repair</h2>
+<p>Simple jobs can sometimes be DIY tasks, but structural, electrical, gas and serious waterproofing problems may require qualified professionals.</p>
+</div>
+
+<div class="tool-grid">
+
+<div class="tool reveal" onclick="showDIY('crack')">
+<b>🧱 Wall Crack</b>
+<small>Identify before repairing</small>
+</div>
+
+<div class="tool reveal" onclick="showDIY('tile')">
+<b>⬛ Replace Tile</b>
+<small>Tools + sequence</small>
+</div>
+
+<div class="tool reveal" onclick="showDIY('paint')">
+<b>🎨 Paint Wall</b>
+<small>Preparation + application</small>
+</div>
+
+<div class="tool reveal" onclick="showDIY('waterproof')">
+<b>💧 Waterproofing</b>
+<small>Find source first</small>
+</div>
+
+<div class="tool reveal" onclick="showDIY('drill')">
+<b>🛠 Drill Safely</b>
+<small>Check hidden services</small>
+</div>
+
+<div class="tool reveal" onclick="showDIY('concrete')">
+<b>🧱 Small Concrete Repair</b>
+<small>Surface-level situations</small>
+</div>
+
+</div>
+
+<div class="panel" id="diyPanel">
+
+<h3>Select a DIY task</h3>
+
+<p style="color:var(--muted);margin-top:8px">
+Choose a task above to see tools, steps, risks and when to stop.
+</p>
+
+</div>
+
+</div>
+</section>
+
+
+<!-- MATERIAL GUIDE -->
+
+<section>
+<div class="container">
+
+<div class="heading reveal">
+<h2>🧰 Material Selection Guide</h2>
+<p>Choosing materials is not only about the lowest price.</p>
+</div>
+
+<div class="grid">
+
+<div class="card reveal">
+<h3>🧱 Cement / Concrete</h3>
+<p>Consider specified strength, exposure, mix requirements, storage, batching and curing.</p>
+</div>
+
+<div class="card reveal">
+<h3>🔩 Reinforcement Steel</h3>
+<p>Check specified grade, diameter, markings, condition, storage and approved documentation.</p>
+</div>
+
+<div class="card reveal">
+<h3>🧱 Bricks / Blocks</h3>
+<p>Consider dimensions, strength, absorption, consistency, defects and intended application.</p>
+</div>
+
+<div class="card reveal">
+<h3>🎨 Paint</h3>
+<p>Choose according to surface, exposure, moisture, substrate preparation and required finish.</p>
+</div>
+
+<div class="card reveal">
+<h3>💧 Waterproofing</h3>
+<p>First identify the water source; product selection without source diagnosis can fail.</p>
+</div>
+
+<div class="card reveal">
+<h3>⬛ Tiles</h3>
+<p>Consider location, water exposure, slip resistance, wear, dimensions and installation system.</p>
+</div>
+
+</div>
+
+</div>
+</section>
+
+
+<!-- TECHNOLOGY -->
+
+<section>
+<div class="container">
+
+<div class="heading reveal">
+<h2>🚀 Modern Construction Technology</h2>
+<p>Technology can improve productivity and information management, but it does not remove the need for engineering judgement.</p>
+</div>
+
+<div class="grid">
+
+<div class="card reveal">
+<h3>🤖 AI</h3>
+<p>Useful for document search, drafting, knowledge retrieval, reporting and selected estimation support.</p>
+</div>
+
+<div class="card reveal">
+<h3>🏢 BIM</h3>
+<p>3D coordination, information management, clash detection and quantity workflows.</p>
+</div>
+
+<div class="card reveal">
+<h3>🚁 Drones</h3>
+<p>Progress monitoring, surveying and inspection where legally and operationally permitted.</p>
+</div>
+
+<div class="card reveal">
+<h3>📡 Laser Scanning</h3>
+<p>Existing-condition capture and geometric verification.</p>
+</div>
+
+<div class="card reveal">
+<h3>👁 Computer Vision</h3>
+<p>Can support selected defect, progress or safety observations with human verification.</p>
+</div>
+
+<div class="card reveal">
+<h3>🌐 Digital Twins</h3>
+<p>Connect physical assets with digital information for operation and maintenance.</p>
+</div>
+
+</div>
+
+</div>
+</section>
+
+
+<!-- AI -->
+
+<section id="ai">
+<div class="container">
+
+<div class="heading reveal">
+<h2>🤖 Ask BuildWise AI</h2>
+<p>Ask about construction, civil engineering, QS, planning, safety, property, materials or DIY.</p>
+</div>
+
+<div class="ai reveal">
+
+<div class="ai-top">
+<div>
+<h3>BuildWise Construction Assistant</h3>
+<span class="ai-status">● Ready</span>
+</div>
+
+<button class="btn secondary" onclick="clearChat()">Clear Chat</button>
+</div>
+
+<div class="suggestions">
+
+<button class="suggestion" onclick="usePrompt('How do I prepare a BOQ?')">How do I prepare a BOQ?</button>
+
+<button class="suggestion" onclick="usePrompt('What should I check before buying a house?')">Buy a house</button>
+
+<button class="suggestion" onclick="usePrompt('How can I identify a serious wall crack?')">Wall crack</button>
+
+<button class="suggestion" onclick="usePrompt('Explain factor of safety')">Factor of safety</button>
+
+<button class="suggestion" onclick="usePrompt('How should I assess construction risk?')">Risk assessment</button>
+
+<button class="suggestion" onclick="usePrompt('How do I calculate concrete quantity?')">Concrete quantity</button>
+
+</div>
+
+<div class="chat" id="chat">
+
+<div class="msg bot">
+👷 <b>BuildWise AI</b><br><br>
+Hi! I'm your construction assistant.<br><br>
+You can ask me about <b>construction, civil engineering,
+structural concepts, QS, safety, property, materials,
+planning or DIY</b>.
+</div>
+
+</div>
+
+<div class="ask">
+
+<input
+id="question"
+placeholder="Ask anything about construction..."
+onkeydown="if(event.key==='Enter')askAI()"
+>
+
+<button class="btn primary" onclick="askAI()">Ask</button>
+
+</div>
+
+<div class="notice">
+For a true online AI assistant, connect the frontend to your own secure
+backend endpoint such as <code>/api/ask</code>. Never expose an AI API key
+directly inside this HTML file.
+</div>
+
+</div>
+
+</div>
+</section>
+
+
+<!-- SEARCHABLE FAQ -->
+
+<section>
+<div class="container">
+
+<div class="heading reveal">
+<h2>❓ Construction, Property & DIY FAQ</h2>
+<p>Search real-world questions instead of browsing a generic FAQ.</p>
+</div>
+
+<div class="search">
+<input
+id="faqSearch"
+placeholder="🔎 Search: foundation, cracks, concrete, BOQ, property, DIY..."
+oninput="filterFAQ()"
+>
+</div>
+
+<div id="faqList">
+
+<div class="faq reveal" data-keywords="foundation construction excavation soil">
+<button onclick="toggleFAQ(this)">
+🏗️ What should I check before starting foundation work?
+</button>
+<div class="faq-answer">
+Review drawings and specifications, site levels, excavation conditions,
+soil/geotechnical information where applicable, underground services,
+water conditions, access, safety controls and required inspections.
+</div>
+</div>
+
+<div class="faq reveal" data-keywords="concrete curing cement construction">
+<button onclick="toggleFAQ(this)">
+🧱 Why is curing important for concrete?
+</button>
+<div class="faq-answer">
+Curing helps maintain suitable moisture and temperature conditions so
+cement hydration can continue. The required method and duration depend
+on the concrete, environment and applicable specification/code.
+</div>
+</div>
+
+<div class="faq reveal" data-keywords="crack column beam structural">
+<button onclick="toggleFAQ(this)">
+⚠️ When should a wall or structural crack be investigated?
+</button>
+<div class="faq-answer">
+Cracks should be investigated when they are significant, recurring,
+widening, associated with displacement, water ingress, corrosion,
+settlement or other signs of structural distress. Do not assume that
+a crack is safe based only on appearance.
+</div>
+</div>
+
+<div class="faq reveal" data-keywords="BOQ quantity surveying estimate">
+<button onclick="toggleFAQ(this)">
+📋 How do I start a BOQ?
+</button>
+<div class="faq-answer">
+Start with the project scope and drawings, divide the work into measurable
+items, determine units and quantities, check descriptions, then apply
+appropriate rates and review the take-off.
+</div>
+</div>
+
+<div class="faq reveal" data-keywords="BBS steel reinforcement">
+<button onclick="toggleFAQ(this)">
+🔩 What information is normally included in a BBS?
+</button>
+<div class="faq-answer">
+A BBS commonly includes bar mark, diameter, shape, dimensions,
+cutting length, quantity and calculated weight, subject to the project's
+drawings and detailing requirements.
+</div>
+</div>
+
+<div class="faq reveal" data-keywords="property buying house inspection">
+<button onclick="toggleFAQ(this)">
+🏠 What should I inspect before buying a house?
+</button>
+<div class="faq-answer">
+Check relevant documents, visible structural condition, roof, drainage,
+dampness, plumbing, electrical installation, alterations, surroundings,
+access and expected repair/maintenance costs. For significant concerns,
+use qualified technical and legal professionals.
+</div>
+</div>
+
+<div class="faq reveal" data-keywords="property cracks house">
+<button onclick="toggleFAQ(this)">
+🏚️ Are all cracks in an old house dangerous?
+</button>
+<div class="faq-answer">
+No. Crack significance depends on location, pattern, width, movement,
+cause and associated symptoms. Cosmetic cracking and structural distress
+cannot reliably be distinguished from a photograph or single observation
+in every case.
+</div>
+</div>
+
+<div class="faq reveal" data-keywords="property damp waterproofing">
+<button onclick="toggleFAQ(this)">
+💧 How can I investigate dampness before buying property?
+</button>
+<div class="faq-answer">
+Look for stains, peeling finishes, musty areas, damaged skirting,
+efflorescence and moisture patterns. Then investigate possible sources
+such as plumbing, roof leakage, ground moisture, external drainage or
+condensation.
+</div>
+</div>
+
+<div class="faq reveal" data-keywords="DIY crack repair wall">
+<button onclick="toggleFAQ(this)">
+🔨 Can I repair a wall crack myself?
+</button>
+<div class="faq-answer">
+Minor cosmetic cracks may sometimes be suitable for basic DIY repair
+after identifying the cause. Do not simply fill a crack if there are
+signs of movement, settlement, structural distress or recurring failure.
+</div>
+</div>
+
+<div class="faq reveal" data-keywords="DIY drilling safety electrical pipe">
+<button onclick="toggleFAQ(this)">
+🛠️ What should I check before drilling a wall?
+</button>
+<div class="faq-answer">
+Consider the possibility of concealed electrical wiring, plumbing,
+gas services or structural elements. Use appropriate detection methods
+where available and follow safe working practices. Stop if the location
+of a critical service is uncertain.
+</div>
+</div>
+
+<div class="faq reveal" data-keywords="DIY tile replacement">
+<button onclick="toggleFAQ(this)">
+⬛ Can I replace a damaged tile myself?
+</button>
+<div class="faq-answer">
+A single tile can often be a manageable DIY task if the substrate and
+surrounding tiles are sound. Use eye protection, suitable tools and
+avoid damaging waterproofing or concealed services.
+</div>
+</div>
+
+<div class="faq reveal" data-keywords="waterproofing leakage DIY">
+<button onclick="toggleFAQ(this)">
+💧 Why can waterproofing fail even with an expensive product?
+</button>
+<div class="faq-answer">
+Product cost alone does not guarantee performance. Surface preparation,
+water-source diagnosis, detailing, joints, drainage, compatibility,
+application conditions and workmanship all matter.
+</div>
+</div>
+
+<div class="faq reveal" data-keywords="safety PPE construction">
+<button onclick="toggleFAQ(this)">
+🦺 Is PPE enough to make construction work safe?
+</button>
+<div class="faq-answer">
+PPE is an important control but is generally treated as the last layer
+in the hierarchy of controls. Elimination, substitution, engineering
+and administrative controls should be considered first where practicable.
+</div>
+</div>
+
+<div class="faq reveal" data-keywords="BIM construction technology">
+<button onclick="toggleFAQ(this)">
+🏢 What is BIM and why is it useful?
+</button>
+<div class="faq-answer">
+BIM is a method of managing built-asset information using digital models
+and associated data. It can support coordination, documentation,
+quantities and asset management.
+</div>
+</div>
+
+</div>
+
+</div>
+</section>
+
+
+<!-- FINAL NOTICE -->
+
+<section>
+<div class="container">
+
+<div class="card reveal" style="text-align:center">
+
+<h2>BuildWise Rule</h2>
+
+<p style="max-width:800px;margin:12px auto;color:var(--muted)">
+Use calculations and AI to understand a problem faster—but verify
+important engineering, safety, legal and property decisions with the
+appropriate drawings, standards, authorities and qualified professionals.
+</p>
+
+<a href="#ai" class="btn primary">🤖 Ask BuildWise AI</a>
+
+</div>
+
+</div>
+</section>
+
+
+<footer>
+
+<div class="container">
+
+<div class="footer-grid">
+
+<div>
+<h2>Build<span style="color:var(--cyan)">Wise</span></h2>
+<p>
+Construction calculators, civil engineering concepts,
+property inspection, DIY guidance, safety and AI.
+</p>
+</div>
+
+<div>
+<h3>Tools</h3>
+<ul>
+<li>Calculators</li>
+<li>Structural Analysis</li>
+<li>Risk Assessment</li>
+<li>Unit Conversion</li>
+</ul>
+</div>
+
+<div>
+<h3>Knowledge</h3>
+<ul>
+<li>Construction</li>
+<li>Property</li>
+<li>DIY</li>
+<li>Technology</li>
+</ul>
+</div>
+
+</div>
+
+<p style="text-align:center;margin-top:35px">
+© 2026 BuildWise
+</p>
+
+</div>
+
+</footer>
+
+<div class="toast" id="toast"></div>
+
+
+<script>
+
+/* =========================
+NAVIGATION
+========================= */
+
+function toggleNav(){
+  document.getElementById("nav").classList.toggle("open");
+}
+
+document.querySelectorAll("nav a").forEach(a=>{
+  a.addEventListener("click",()=>{
+    document.getElementById("nav").classList.remove("open");
+  });
+});
+
+
+/* =========================
+PARTICLES
+========================= */
+
+for(let i=0;i<35;i++){
+
+  const p=document.createElement("div");
+
+  p.className="particle";
+
+  p.style.left=Math.random()*100+"vw";
+  p.style.animationDuration=(8+Math.random()*15)+"s";
+  p.style.animationDelay=(-Math.random()*15)+"s";
+
+  document.body.appendChild(p);
+}
+
+
+/* =========================
+TOAST
+========================= */
+
+function toast(message){
+
+  const t=document.getElementById("toast");
+
+  t.textContent=message;
+  t.classList.add("show");
+
+  setTimeout(()=>{
+    t.classList.remove("show");
+  },2200);
+}
+
+
+/* =========================
+UNIT CONVERSION
+========================= */
+
+const unitToMeter={
+  mm:.001,
+  cm:.01,
+  m:1,
+  ft:.3048,
+  in:.0254,
+  yd:.9144
+};
+
+function unitSelect(id,selected="m"){
+
+  return `
+  <select id="${id}">
+    <option value="mm" ${selected==="mm"?"selected":""}>mm</option>
+    <option value="cm" ${selected==="cm"?"selected":""}>cm</option>
+    <option value="m" ${selected==="m"?"selected":""}>m</option>
+    <option value="ft" ${selected==="ft"?"selected":""}>ft</option>
+    <option value="in" ${selected==="in"?"selected":""}>inch</option>
+    <option value="yd" ${selected==="yd"?"selected":""}>yard</option>
+  </select>
+  `;
+}
+
+function convert(value,from,to){
+  return value*unitToMeter[from]/unitToMeter[to];
+}
+
+
+/* =========================
+CALCULATORS
+========================= */
+
+function openTool(type){
+
+  const title=document.getElementById("calculatorTitle");
+  const body=document.getElementById("calculatorBody");
+
+  if(type==="concrete"){
+
+    title.textContent="🧱 Concrete Volume";
+
+    body.innerHTML=`
+
+    <div class="form">
+
+      <div>
+        <label>Length</label>
+        <input id="cL" value="5">
+      </div>
+
+      <div>
+        <label>Length Unit</label>
+        ${unitSelect("cLU")}
+      </div>
+
+      <div>
+        <label>Width</label>
+        <input id="cW" value="4">
+      </div>
+
+      <div>
+        <label>Width Unit</label>
+        ${unitSelect("cWU")}
+      </div>
+
+      <div>
+        <label>Depth</label>
+        <input id="cD" value="0.15">
+      </div>
+
+      <div>
+        <label>Depth Unit</label>
+        ${unitSelect("cDU")}
+      </div>
+
+      <div>
+        <label>Wastage %</label>
+        <input id="cWaste" value="5">
+      </div>
+
+    </div>
+
+    <br>
+
+    <button class="btn primary" onclick="calcConcrete()">Calculate</button>
+
+    <div id="calcResult"></div>
+    `;
+
+  }
+
+  else if(type==="brick"){
+
+    title.textContent="🧱 Brick Quantity";
+
+    body.innerHTML=`
+
+    <div class="form">
+
+      <div>
+        <label>Wall Length</label>
+        <input id="bWL" value="10">
+      </div>
+
+      <div>
+        <label>Wall Length Unit</label>
+        ${unitSelect("bWLU")}
+      </div>
+
+      <div>
+        <label>Wall Height</label>
+        <input id="bWH" value="3">
+      </div>
+
+      <div>
+        <label>Wall Height Unit</label>
+        ${unitSelect("bWHU")}
+      </div>
+
+      <div>
+        <label>Wall Thickness</label>
+        <input id="bWT" value="0.115">
+      </div>
+
+      <div>
+        <label>Thickness Unit</label>
+        ${unitSelect("bWTU")}
+      </div>
+
+      <div>
+        <label>Brick Length</label>
+        <input id="bBL" value="0.225">
+      </div>
+
+      <div>
+        <label>Brick Height</label>
+        <input id="bBH" value="0.075">
+      </div>
+
+      <div>
+        <label>Brick Unit</label>
+        ${unitSelect("bBU")}
+      </div>
+
+      <div>
+        <label>Wastage %</label>
+        <input id="bWaste" value="5">
+      </div>
+
+    </div>
+
+    <br>
+
+    <button class="btn primary" onclick="calcBricks()">Calculate</button>
+
+    <div id="calcResult"></div>
+    `;
+
+  }
+
+  else if(type==="excavation"){
+
+    title.textContent="⛏ Excavation Volume";
+
+    body.innerHTML=`
+
+    <div class="form">
+
+      <div>
+        <label>Length</label>
+        <input id="eL" value="10">
+      </div>
+
+      <div>
+        <label>Unit</label>
+        ${unitSelect("eLU")}
+      </div>
+
+      <div>
+        <label>Width</label>
+        <input id="eW" value="2">
+      </div>
+
+      <div>
+        <label>Unit</label>
+        ${unitSelect("eWU")}
+      </div>
+
+      <div>
+        <label>Depth</label>
+        <input id="eD" value="1.5">
+      </div>
+
+      <div>
+        <label>Unit</label>
+        ${unitSelect("eDU")}
+      </div>
+
+    </div>
+
+    <br>
+
+    <button class="btn primary" onclick="calcExcavation()">Calculate</button>
+
+    <div id="calcResult"></div>
+    `;
+
+  }
+
+  else if(type==="area"){
+
+    title.textContent="📐 Area & Volume";
+
+    body.innerHTML=`
+
+    <div class="form">
+
+      <div>
+        <label>Length</label>
+        <input id="aL" value="5">
+      </div>
+
+      <div>
+        <label>Unit</label>
+        ${unitSelect("aLU")}
+      </div>
+
+      <div>
+        <label>Width</label>
+        <input id="aW" value="4">
+      </div>
+
+      <div>
+        <label>Unit</label>
+        ${unitSelect("aWU")}
+      </div>
+
+      <div>
+        <label>Height / Depth</label>
+        <input id="aH" value="3">
+      </div>
+
+      <div>
+        <label>Unit</label>
+        ${unitSelect("aHU")}
+      </div>
+
+    </div>
+
+    <br>
+
+    <button class="btn primary" onclick="calcArea()">Calculate</button>
+
+    <div id="calcResult"></div>
+    `;
+
+  }
+
+  else if(type==="paint"){
+
+    title.textContent="🎨 Paint Calculator";
+
+    body.innerHTML=`
+
+    <div class="form">
+
+      <div>
+        <label>Area</label>
+        <input id="pArea" value="100">
+      </div>
+
+      <div>
+        <label>Area Unit</label>
+        <select id="pUnit">
+          <option value="m2">m²</option>
+          <option value="ft2">ft²</option>
+        </select>
+      </div>
+
+      <div>
+        <label>Number of Coats</label>
+        <input id="pCoats" value="2">
+      </div>
+
+      <div>
+        <label>Coverage (m²/L)</label>
+        <input id="pCoverage" value="10">
+      </div>
+
+      <div>
+        <label>Wastage %</label>
+        <input id="pWaste" value="10">
+      </div>
+
+    </div>
+
+    <br>
+
+    <button class="btn primary" onclick="calcPaint()">Calculate</button>
+
+    <div id="calcResult"></div>
+    `;
+
+  }
+
+  else if(type==="floor"){
+
+    title.textContent="⬛ Flooring";
+
+    body.innerHTML=`
+
+    <div class="form">
+
+      <div>
+        <label>Length</label>
+        <input id="fL" value="5">
+      </div>
+
+      <div>
+        <label>Unit</label>
+        ${unitSelect("fLU")}
+      </div>
+
+      <div>
+        <label>Width</label>
+        <input id="fW" value="4">
+      </div>
+
+      <div>
+        <label>Unit</label>
+        ${unitSelect("fWU")}
+      </div>
+
+      <div>
+        <label>Wastage %</label>
+        <input id="fWaste" value="10">
+      </div>
+
+    </div>
+
+    <br>
+
+    <button class="btn primary" onclick="calcFloor()">Calculate</button>
+
+    <div id="calcResult"></div>
+    `;
+
+  }
+
+  else if(type==="steel"){
+
+    title.textContent="🔩 Reinforcement Steel Weight";
+
+    body.innerHTML=`
+
+    <div class="form">
+
+      <div>
+        <label>Bar Diameter</label>
+        <input id="sD" value="16">
+      </div>
+
+      <div>
+        <label>Diameter Unit</label>
+        <select id="sDU">
+          <option value="mm">mm</option>
+          <option value="in">inch</option>
+        </select>
+      </div>
+
+      <div>
+        <label>Bar Length</label>
+        <input id="sL" value="100">
+      </div>
+
+      <div>
+        <label>Length Unit</label>
+        ${unitSelect("sLU")}
+      </div>
+
+    </div>
+
+    <br>
+
+    <button class="btn primary" onclick="calcSteel()">Calculate</button>
+
+    <div id="calcResult"></div>
+
+    <div class="notice">
+      Theoretical unit mass ≈ d² / 162 kg/m when d is in mm.
+    </div>
+    `;
+
+  }
+
+  else if(type==="unit"){
+
+    title.textContent="🔄 Construction Unit Converter";
+
+    body.innerHTML=`
+
+    <div class="form">
+
+      <div>
+        <label>Value</label>
+        <input id="uValue" value="1">
+      </div>
+
+      <div>
+        <label>From</label>
+        <select id="uFrom">
+          <option>mm</option>
+          <option>cm</option>
+          <option selected>m</option>
+          <option>ft</option>
+          <option>in</option>
+          <option>yd</option>
+        </select>
+      </div>
+
+      <div>
+        <label>To</label>
+        <select id="uTo">
+          <option>mm</option>
+          <option>cm</option>
+          <option>m</option>
+          <option selected>ft</option>
+          <option>in</option>
+          <option>yd</option>
+        </select>
+      </div>
+
+    </div>
+
+    <br>
+
+    <button class="btn primary" onclick="calcUnit()">Convert</button>
+
+    <div id="calcResult"></div>
+    `;
+  }
+
+  document.getElementById("calculatorPanel")
+    .scrollIntoView({behavior:"smooth",block:"center"});
+}
+
+
+function showCalc(html){
+
+  document.getElementById("calcResult").innerHTML=
+  `<div class="result">${html}</div>`;
+}
+
+
+function calcConcrete(){
+
+  const L=convert(+cL.value,cLU.value,"m");
+  const W=convert(+cW.value,cWU.value,"m");
+  const D=convert(+cD.value,cDU.value,"m");
+
+  const base=L*W*D;
+  const total=base*(1+(+cWaste.value||0)/100);
+
+  showCalc(`
+  Concrete required:
+  <strong>${total.toFixed(3)} m³</strong>
+  <br><br>
+  Base volume: ${base.toFixed(3)} m³
+  <br>
+  Wastage: ${cWaste.value}%
+  `);
+}
+
+
+function calcBricks(){
+
+  const L=convert(+bWL.value,bWLU.value,"m");
+  const H=convert(+bWH.value,bWHU.value,"m");
+  const T=convert(+bWT.value,bWTU.value,"m");
+
+  const BL=convert(+bBL.value,bBU.value,"m");
+  const BH=convert(+bBH.value,bBU.value,"m");
+
+  const wallVolume=L*H*T;
+  const brickVolume=BL*BH*T;
+
+  let qty=wallVolume/brickVolume;
+
+  qty*=1+(+bWaste.value||0)/100;
+
+  showCalc(`
+  Approximate bricks:
+  <strong>${Math.ceil(qty).toLocaleString()}</strong>
+  <br><br>
+  Wall volume: ${wallVolume.toFixed(3)} m³
+  `);
+}
+
+
+function calcExcavation(){
+
+  const L=convert(+eL.value,eLU.value,"m");
+  const W=convert(+eW.value,eWU.value,"m");
+  const D=convert(+eD.value,eDU.value,"m");
+
+  showCalc(`
+  Excavation volume:
+  <strong>${(L*W*D).toFixed(3)} m³</strong>
+  `);
+}
+
+
+function calcArea(){
+
+  const L=convert(+aL.value,aLU.value,"m");
+  const W=convert(+aW.value,aWU.value,"m");
+  const H=convert(+aH.value,aHU.value,"m");
+
+  showCalc(`
+  Area:
+  <strong>${(L*W).toFixed(3)} m²</strong>
+  <br><br>
+  Volume:
+  <strong>${(L*W*H).toFixed(3)} m³</strong>
+  `);
+}
+
+
+function calcPaint(){
+
+  let area=+pArea.value;
+
+  if(pUnit.value==="ft2"){
+    area*=0.092903;
+  }
+
+  const litres=
+    area*+pCoats.value/+pCoverage.value*
+    (1+(+pWaste.value||0)/100);
+
+  showCalc(`
+  Estimated paint:
+  <strong>${litres.toFixed(2)} L</strong>
+  <br><br>
+  Effective area: ${area.toFixed(2)} m²
+  `);
+}
+
+
+function calcFloor(){
+
+  const L=convert(+fL.value,fLU.value,"m");
+  const W=convert(+fW.value,fWU.value,"m");
+
+  const area=L*W;
+  const purchase=area*(1+(+fWaste.value||0)/100);
+
+  showCalc(`
+  Net area:
+  <strong>${area.toFixed(2)} m²</strong>
+  <br><br>
+  Purchase quantity:
+  <strong>${purchase.toFixed(2)} m²</strong>
+  `);
+}
+
+
+function calcSteel(){
+
+  let d=+sD.value;
+
+  if(sDU.value==="in"){
+    d*=25.4;
+  }
+
+  const L=convert(+sL.value,sLU.value,"m");
+
+  const kgm=d*d/162;
+  const total=kgm*L;
+
+  showCalc(`
+  Unit weight:
+  <strong>${kgm.toFixed(3)} kg/m</strong>
+  <br><br>
+  Total weight:
+  <strong>${total.toFixed(2)} kg</strong>
+  `);
+}
+
+
+function calcUnit(){
+
+  const value=+uValue.value;
+
+  const answer=convert(
+    value,
+    uFrom.value,
+    uTo.value
+  );
+
+  showCalc(`
+  <strong>${answer.toFixed(6)} ${uTo.value}</strong>
+  `);
+}
+
+
+/* =========================
+STRUCTURAL ANALYSIS
+========================= */
+
+function openStructure(type){
+
+  const title=document.getElementById("structureTitle");
+  const body=document.getElementById("structureBody");
+
+  if(type==="beam"){
+
+    title.textContent="📊 Simply Supported Beam Reactions";
+
+    body.innerHTML=`
+
+    <div class="form">
+
+      <div>
+        <label>Span L (m)</label>
+        <input id="beamL" value="6">
+      </div>
+
+      <div>
+        <label>Point Load P (kN)</label>
+        <input id="beamP" value="10">
+      </div>
+
+      <div>
+        <label>Load Distance a (m)</label>
+        <input id="beamA" value="3">
+      </div>
+
+    </div>
+
+    <br>
+
+    <button class="btn primary" onclick="beamAnalysis()">Analyze</button>
+
+    <div id="structureResult"></div>
+    `;
+
+  }
+
+  else if(type==="moment"){
+
+    title.textContent="〰 Point Load Bending Moment";
+
+    body.innerHTML=`
+
+    <div class="form">
+
+      <div>
+        <label>Span L (m)</label>
+        <input id="momentL" value="6">
+      </div>
+
+      <div>
+        <label>Load P (kN)</label>
+        <input id="momentP" value="10">
+      </div>
+
+      <div>
+        <label>Load Position a (m)</label>
+        <input id="momentA" value="3">
+      </div>
+
+    </div>
+
+    <br>
+
+    <button class="btn primary" onclick="momentAnalysis()">Calculate</button>
+
+    <div id="structureResult"></div>
+    `;
+
+  }
+
+  else if(type==="deflection"){
+
+    title.textContent="↕ Central Deflection";
+
+    body.innerHTML=`
+
+    <div class="form">
+
+      <div>
+        <label>Span L (m)</label>
+        <input id="defL" value="5">
+      </div>
+
+      <div>
+        <label>Point Load P (kN)</label>
+        <input id="defP" value="10">
+      </div>
+
+      <div>
+        <label>E (GPa)</label>
+        <input id="defE" value="200">
+      </div>
+
+      <div>
+        <label>I (mm⁴)</label>
+        <input id="defI" value="100000000">
+      </div>
+
+    </div>
+
+    <br>
+
+    <button class="btn primary" onclick="deflectionAnalysis()">Calculate</button>
+
+    <div id="structureResult"></div>
+    `;
+
+  }
+
+  else if(type==="column"){
+
+    title.textContent="🏢 Column Preliminary Check";
+
+    body.innerHTML=`
+
+    <div class="form">
+
+      <div>
+        <label>Axial Load P (kN)</label>
+        <input id="colP" value="500">
+      </div>
+
+      <div>
+        <label>Width (mm)</label>
+        <input id="colB" value="300">
+      </div>
+
+      <div>
+        <label>Depth (mm)</label>
+        <input id="colH" value="300">
+      </div>
+
+      <div>
+        <label>Effective Length (m)</label>
+        <input id="colL" value="3">
+      </div>
+
+      <div>
+        <label>E (GPa)</label>
+        <input id="colE" value="200">
+      </div>
+
+    </div>
+
+    <br>
+
+    <button class="btn primary" onclick="columnAnalysis()">Analyze</button>
+
+    <div id="structureResult"></div>
+    `;
+
+  }
+
+  else if(type==="fos"){
+
+    title.textContent="🛡 Factor of Safety";
+
+    body.innerHTML=`
+
+    <div class="form">
+
+      <div>
+        <label>Capacity</label>
+        <input id="fosCapacity" value="100">
+      </div>
+
+      <div>
+        <label>Demand</label>
+        <input id="fosDemand" value="50">
+      </div>
+
+      <div>
+        <label>Unit</label>
+        <select>
+          <option>kN</option>
+          <option>kNm</option>
+          <option>kPa</option>
+          <option>MPa</option>
+        </select>
+      </div>
+
+    </div>
+
+    <br>
+
+    <button class="btn primary" onclick="fosAnalysis()">Calculate FOS</button>
+
+    <div id="structureResult"></div>
+    `;
+
+  }
+
+  else if(type==="bearing"){
+
+    title.textContent="🌍 Foundation Bearing Pressure";
+
+    body.innerHTML=`
+
+    <div class="form">
+
+      <div>
+        <label>Load (kN)</label>
+        <input id="bearingP" value="500">
+      </div>
+
+      <div>
+        <label>Length (m)</label>
+        <input id="bearingL" value="2">
+      </div>
+
+      <div>
+        <label>Width (m)</label>
+        <input id="bearingW" value="2">
+      </div>
+
+      <div>
+        <label>Reference Allowable Pressure (kPa)</label>
+        <input id="bearingQ" value="150">
+      </div>
+
+    </div>
+
+    <br>
+
+    <button class="btn primary" onclick="bearingAnalysis()">Calculate</button>
+
+    <div id="structureResult"></div>
+    `;
+  }
+
+  document.getElementById("structurePanel")
+    .scrollIntoView({behavior:"smooth",block:"center"});
+}
+
+
+function structureResult(html){
+
+  document.getElementById("structureResult").innerHTML=
+  `<div class="result">${html}</div>`;
+}
+
+
+function beamAnalysis(){
+
+  const L=+beamL.value;
+  const P=+beamP.value;
+  const a=+beamA.value;
+
+  if(a<0 || a>L){
+    structureResult("Load position must be within the beam span.");
+    return;
+  }
+
+  const b=L-a;
+
+  const RA=P*b/L;
+  const RB=P*a/L;
+
+  structureResult(`
+  Left reaction:
+  <strong>${RA.toFixed(2)} kN</strong>
+  <br>
+  Right reaction:
+  <strong>${RB.toFixed(2)} kN</strong>
+  `);
+}
+
+
+function momentAnalysis(){
+
+  const L=+momentL.value;
+  const P=+momentP.value;
+  const a=+momentA.value;
+
+  if(a<0 || a>L){
+    structureResult("Load position must be within the span.");
+    return;
+  }
+
+  const b=L-a;
+  const M=P*a*b/L;
+
+  structureResult(`
+  Maximum moment at the point load:
+  <strong>${M.toFixed(2)} kNm</strong>
+  <br><br>
+  Idealized formula:
+  M = Pab/L
+  `);
+}
+
+
+function deflectionAnalysis(){
+
+  const L=+defL.value;
+  const P=+defP.value*1000;
+  const E=+defE.value*1e9;
+  const I=+defI.value*1e-12;
+
+  if(E<=0 || I<=0){
+    structureResult("E and I must be greater than zero.");
+    return;
+  }
+
+  const delta=
+    P*Math.pow(L,3)/(48*E*I);
+
+  structureResult(`
+  Approximate central deflection:
+  <strong>${(delta*1000).toFixed(3)} mm</strong>
+  <br><br>
+  Idealized relation:
+  δ = PL³ / 48EI
+  `);
+}
+
+
+function columnAnalysis(){
+
+  const P=+colP.value*1000;
+  const b=+colB.value/1000;
+  const h=+colH.value/1000;
+  const L=+colL.value;
+  const E=+colE.value*1e9;
+
+  const A=b*h;
+
+  const stress=P/A;
+
+  const I=Math.min(
+    b*Math.pow(h,3)/12,
+    h*Math.pow(b,3)/12
+  );
+
+  const r=Math.sqrt(I/A);
+
+  const slenderness=L/r;
+
+  const euler=
+    Math.PI*Math.PI*E*I/(L*L);
+
+  structureResult(`
+  Cross-sectional area:
+  <strong>${(A*1e6).toFixed(0)} mm²</strong>
+  <br><br>
+  Average axial stress:
+  <strong>${(stress/1e6).toFixed(2)} MPa</strong>
+  <br><br>
+  Slenderness ratio:
+  <strong>${slenderness.toFixed(1)}</strong>
+  <br><br>
+  Ideal Euler critical load:
+  <strong>${(euler/1000).toFixed(1)} kN</strong>
+  `);
+}
+
+
+function fosAnalysis(){
+
+  const capacity=+fosCapacity.value;
+  const demand=+fosDemand.value;
+
+  if(demand<=0){
+    structureResult("Demand must be greater than zero.");
+    return;
+  }
+
+  const fos=capacity/demand;
+
+  structureResult(`
+  Factor of Safety:
+  <strong>${fos.toFixed(2)}</strong>
+  <br><br>
+  FOS = Capacity ÷ Demand
+  `);
+}
+
+
+function bearingAnalysis(){
+
+  const P=+bearingP.value;
+  const L=+bearingL.value;
+  const W=+bearingW.value;
+  const q=+bearingQ.value;
+
+  const area=L*W;
+  const pressure=P/area;
+
+  structureResult(`
+  Foundation area:
+  <strong>${area.toFixed(2)} m²</strong>
+  <br><br>
+  Average pressure:
+  <strong>${pressure.toFixed(2)} kPa</strong>
+  <br><br>
+  Reference pressure:
+  ${q.toFixed(2)} kPa
+  `);
+}
+
+
+/* =========================
+RISK
+========================= */
+
+function riskAssessment(){
+
+  const l=+document.getElementById("likelihood").value;
+  const s=+document.getElementById("severity").value;
+
+  const score=l*s;
+
+  let level;
+
+  if(score<=4) level="Low";
+  else if(score<=9) level="Medium";
+  else if(score<=16) level="High";
+  else level="Very High";
+
+  const hazard=
+    document.getElementById("hazard").value ||
+    "Selected construction hazard";
+
+  const colorClass=
+    score<=4?"low":
+    score<=9?"medium":
+    "high";
+
+  document.getElementById("riskResult").innerHTML=`
+
+  <div class="result">
+
+  <h3>${hazard}</h3>
+
+  <br>
+
+  Risk score:
+  <strong>${score}/25</strong>
+
+  <br><br>
+
+  Risk level:
+  <strong>${level}</strong>
+
+  <br><br>
+
+  <b>Control strategy:</b>
+
+  <ul style="margin-top:8px;color:var(--muted)">
+    <li>Eliminate the hazard where practicable.</li>
+    <li>Substitute with a safer alternative.</li>
+    <li>Use engineering controls.</li>
+    <li>Use administrative controls.</li>
+    <li>Use suitable PPE as an additional control.</li>
+  </ul>
+
+  <div class="matrix">
+
+  ${Array.from({length:25},(_,i)=>{
+
+    const n=i+1;
+
+    const cls=
+      n<=4?"low":
+      n<=9?"medium":
+      "high";
+
+    return `<div class="${cls}">${n}</div>`;
+
+  }).join("")}
+
+  </div>
+
+  </div>
+  `;
+}
+
+
+/* =========================
+DIY GUIDES
+========================= */
+
+const diyData={
+
+crack:{
+title:"🧱 Wall Crack Assessment",
+difficulty:"Difficulty: Easy for observation / Professional assessment may be required",
+tools:"Torch, ruler/crack gauge, camera, notebook",
+steps:[
+"Clean the visible area enough to observe the crack pattern.",
+"Record location, approximate width, direction and whether it appears to be changing.",
+"Check nearby doors, windows, floors and walls for related movement or water damage.",
+"Look for possible moisture, settlement or structural symptoms.",
+"Monitor minor cracks if appropriate and seek professional assessment when the cause is uncertain."
+],
+risk:"Do not treat a potentially structural or moving crack as a simple cosmetic repair."
+},
+
+tile:{
+title:"⬛ Single Tile Replacement",
+difficulty:"Difficulty: Medium",
+tools:"Replacement tile, scraper, suitable adhesive, grout tools, eye protection",
+steps:[
+"Confirm the replacement tile matches size, thickness and intended use.",
+"Protect yourself and surrounding surfaces.",
+"Remove the damaged tile carefully without unnecessarily damaging the substrate.",
+"Prepare the surface and follow the adhesive manufacturer's instructions.",
+"Install the tile, allow appropriate setting time and grout the joints."
+],
+risk:"Take care around waterproofed areas and avoid damaging concealed services."
+},
+
+paint:{
+title:"🎨 Wall Painting",
+difficulty:"Difficulty: Easy to Medium",
+tools:"Roller, brush, tray, masking material, suitable filler/sandpaper",
+steps:[
+"Identify the existing surface and clean it.",
+"Repair suitable minor surface defects and allow them to dry.",
+"Protect floors, fixtures and adjacent surfaces.",
+"Apply the appropriate primer when required.",
+"Apply compatible coats according to the product instructions."
+],
+risk:"Ventilate the area and follow the coating manufacturer's safety instructions."
+},
+
+waterproof:{
+title:"💧 Waterproofing Investigation",
+difficulty:"Difficulty: Investigation may require a professional",
+tools:"Torch, moisture observation tools, camera, access equipment as appropriate",
+steps:[
+"Locate the visible symptom rather than immediately applying a coating.",
+"Check whether the source could be roof, plumbing, external drainage, ground moisture or condensation.",
+"Inspect joints, penetrations and drainage paths.",
+"Repair the source where identified.",
+"Use a waterproofing system appropriate to the substrate and exposure."
+],
+risk:"Covering dampness without finding the source can hide an ongoing problem."
+},
+
+drill:{
+title:"🛠 Safe Wall Drilling",
+difficulty:"Difficulty: Easy only when hidden services are adequately considered",
+tools:"Drill, suitable bit, eye protection, detection method where appropriate",
+steps:[
+"Identify the wall type and intended fixing.",
+"Consider concealed electrical wiring, plumbing, gas services and structural elements.",
+"Use suitable detection methods where available.",
+"Select the correct bit, fixing and drilling mode.",
+"Stop if unexpected resistance, water, wiring or other critical signs are encountered."
+],
+risk:"Unknown concealed services are a reason to stop and investigate."
+},
+
+concrete:{
+title:"🧱 Small Surface Concrete Repair",
+difficulty:"Difficulty: Medium",
+tools:"Suitable repair material, cleaning tools, PPE",
+steps:[
+"Determine whether the defect is only superficial.",
+"Remove loose material and clean the substrate.",
+"Identify moisture or corrosion issues if present.",
+"Select a repair material compatible with the substrate.",
+"Follow the manufacturer's preparation, application and curing requirements."
+],
+risk:"Do not use a DIY surface repair to conceal significant structural deterioration."
+}
+
+};
+
+
+function showDIY(type){
+
+  const d=diyData[type];
+
+  document.getElementById("diyPanel").innerHTML=`
+
+  <h3>${d.title}</h3>
+
+  <p style="color:var(--cyan);margin:7px 0">
+  ${d.difficulty}
+  </p>
+
+  <p style="color:var(--muted);margin-bottom:14px">
+  <b>Useful tools:</b> ${d.tools}
+  </p>
+
+  <div class="steps">
+
+  ${d.steps.map((step,i)=>`
+
+  <div class="step">
+    <div class="num">${i+1}</div>
+    <div>${step}</div>
+  </div>
+
+  `).join("")}
+
+  </div>
+
+  <div class="notice">
+  <strong>⚠ Safety:</strong> ${d.risk}
+  </div>
+  `;
+
+  document.getElementById("diyPanel")
+    .scrollIntoView({behavior:"smooth",block:"center"});
+}
+
+
+/* =========================
+AI KNOWLEDGE
+========================= */
+
+const knowledge={
+
+boq:`
+<b>BOQ — Bill of Quantities</b><br><br>
+A practical workflow is:
+scope → drawings → work breakdown → measurement → quantities →
+units → rates → amounts → review.
+`,
+
+bbs:`
+<b>BBS — Bar Bending Schedule</b><br><br>
+A typical BBS contains bar mark, diameter, shape, dimensions,
+cutting length, quantity and theoretical weight, based on the
+project drawings and reinforcement detailing.
+`,
+
+"factor of safety":`
+<b>Factor of Safety</b><br><br>
+The basic concept is:
+<br><br>
+FOS = Capacity ÷ Demand.
+<br><br>
+The appropriate design approach and safety factors depend on the
+material, failure mode, design standard and project conditions.
+`,
+
+"risk assessment":`
+<b>Risk Assessment</b><br><br>
+Identify the hazard → identify who may be exposed →
+estimate likelihood and severity → select controls →
+implement controls → monitor and review.
+`,
+
+"bending moment":`
+<b>Bending Moment</b><br><br>
+Bending moment represents the internal effect associated with
+loads acting on a structural member. Beam diagrams help visualize
+how moment varies along the member.
+`,
+
+"shear force":`
+<b>Shear Force</b><br><br>
+Shear force is an internal transverse force in a structural member.
+Shear-force diagrams are commonly used with bending-moment diagrams.
+`,
+
+uls:`
+<b>ULS — Ultimate Limit State</b><br><br>
+ULS checks relate to structural safety against relevant failure
+or loss of resistance under design situations.
+`,
+
+sls:`
+<b>SLS — Serviceability Limit State</b><br><br>
+SLS concerns usability and effects such as deflection, vibration
+and cracking under relevant service conditions.
+`,
+
+concrete:`
+<b>Concrete Workflow</b><br><br>
+Review drawings → inspect formwork → verify reinforcement →
+check dimensions and levels → place concrete → compact →
+finish → cure → test/document.
+`,
+
+"buy a house":`
+<b>Property Buying Checklist</b><br><br>
+Check documents, structure, roof, drainage, dampness, utilities,
+alterations, surroundings, access and expected maintenance costs.
+For significant issues, use appropriate legal and technical professionals.
+`,
+
+property:`
+<b>Property Inspection</b><br><br>
+Consider documents, structure, roof, drainage, moisture,
+utilities, alterations, environmental conditions and lifecycle costs.
+`,
+
+bim:`
+<b>BIM</b><br><br>
+Building Information Modelling combines digital geometry with
+information that can support coordination, documentation,
+quantity workflows and asset management.
+`,
+
+"wall crack":`
+<b>Wall Crack</b><br><br>
+Do not judge a crack only by appearance. Consider location,
+pattern, width, movement, water damage, settlement and whether
+it is recurring. Significant or uncertain cracks should be assessed
+by an appropriate professional.
+`,
+
+"waterproofing":`
+<b>Waterproofing</b><br><br>
+Find the water source first. Possible causes include roof leakage,
+plumbing, external drainage, ground moisture and condensation.
+Applying a coating without diagnosing the source can result in failure.
+`,
+
+"working at height":`
+<b>Working at Height</b><br><br>
+Plan the activity, identify hazards, consider whether work at height
+can be avoided, use suitable collective/engineering controls where
+possible, and follow applicable site safety requirements.
+`,
+
+"paint wall":`
+<b>Painting a Wall</b><br><br>
+Prepare and clean the surface → repair defects → allow drying →
+prime where required → apply compatible coats → allow appropriate
+drying/curing between coats.
+`,
+
+"unit conversion":`
+<b>Construction Units</b><br><br>
+BuildWise can convert common length units such as mm, cm, m,
+feet, inches and yards. For project quantities, always make sure
+the final calculation uses consistent units.
+`
+};
+
+
+function usePrompt(text){
+
+  document.getElementById("question").value=text;
+
+  askAI();
+}
+
+
+function addMessage(text,type){
+
+  const chat=document.getElementById("chat");
+
+  const msg=document.createElement("div");
+
+  msg.className="msg "+type;
+
+  msg.innerHTML=text;
+
+  chat.appendChild(msg);
+
+  chat.scrollTop=chat.scrollHeight;
+}
+
+
+function typingMessage(){
+
+  const chat=document.getElementById("chat");
+
+  const msg=document.createElement("div");
+
+  msg.className="msg bot";
+
+  msg.innerHTML=`
+  <span>BuildWise is thinking</span>
+  <span style="animation:typing 1s infinite"> ● ● ●</span>
+  `;
+
+  chat.appendChild(msg);
+
+  chat.scrollTop=chat.scrollHeight;
+
+  return msg;
+}
+
+
+async function askAI(){
+
+  const input=document.getElementById("question");
+
+  const q=input.value.trim();
+
+  if(!q)return;
+
+  addMessage(q,"user");
+
+  input.value="";
+
+  const typing=typingMessage();
+
+  const lower=q.toLowerCase();
+
+  /* Local knowledge fallback */
+
+  let localAnswer=null;
+
+  for(const key in knowledge){
+
+    if(lower.includes(key)){
+      localAnswer=knowledge[key];
+      break;
+    }
+
+  }
+
+  /*
+    Optional backend hook.
+    If /api/ask exists, the frontend can request a real AI answer.
+    If it does not exist, local knowledge is used automatically.
+  */
+
+  try{
+
+    const response=await fetch("/api/ask",{
+      method:"POST",
+      headers:{
+        "Content-Type":"application/json"
+      },
+      body:JSON.stringify({
+        question:q,
+        category:"construction"
+      })
+    });
+
+    if(response.ok){
+
+      const data=await response.json();
+
+      typing.remove();
+
+      if(data && data.answer){
+
+        addMessage(data.answer,"bot");
+        return;
+
+      }
+
+    }
+
+  }catch(error){
+    /* local fallback */
+  }
+
+  setTimeout(()=>{
+
+    typing.remove();
+
+    if(localAnswer){
+
+      addMessage(localAnswer,"bot");
+
+    }else{
+
+      addMessage(`
+      <b>BuildWise Guidance</b><br><br>
+
+      I can help with construction, structural concepts,
+      quantity surveying, safety, property inspection,
+      materials, planning and DIY.<br><br>
+
+      Try asking:<br>
+      • How do I prepare a BOQ?<br>
+      • What should I check before buying a house?<br>
+      • How do I investigate a wall crack?<br>
+      • Explain factor of safety.<br>
+      • How do I calculate concrete quantity?<br>
+      • What is BBS?<br>
+      • How do I assess construction risk?
+      `,"bot");
+
+    }
+
+  },650);
+
+}
+
+
+function clearChat(){
+
+  document.getElementById("chat").innerHTML=`
+
+  <div class="msg bot">
+  👷 <b>BuildWise AI</b><br><br>
+  Chat cleared. Ask your next construction question.
+  </div>
+
+  `;
+
+}
+
+
+/* =========================
+FAQ
+========================= */
+
+function toggleFAQ(button){
+
+  const faq=button.parentElement;
+
+  faq.classList.toggle("open");
+}
+
+
+function filterFAQ(){
+
+  const q=document.getElementById("faqSearch")
+    .value
+    .toLowerCase()
+    .trim();
+
+  document.querySelectorAll(".faq").forEach(item=>{
+
+    const text=item.innerText.toLowerCase();
+
+    item.style.display=
+      !q || text.includes(q) ?
+      "block":
+      "none";
+
+  });
+}
+
+
+/* =========================
+CHECKLIST LOCAL STORAGE
+========================= */
+
+const checks=document.querySelectorAll("[data-save]");
+
+checks.forEach(check=>{
+
+  const key="buildwise_"+check.dataset.save;
+
+  check.checked=
+    localStorage.getItem(key)==="true";
+
+  check.addEventListener("change",()=>{
+
+    localStorage.setItem(
+      key,
+      check.checked
+    );
+
+    updateProgress();
+
+  });
+
+});
+
+
+function updateProgress(){
+
+  const all=document.querySelectorAll("[data-save]");
+
+  const completed=
+    [...all].filter(x=>x.checked).length;
+
+  const percentage=
+    all.length ?
+    Math.round(completed/all.length*100):
+    0;
+
+  document.getElementById("progressNumber")
+    .textContent=percentage+"%";
+}
+
+updateProgress();
+
+
+/* =========================
+SCROLL ANIMATION
+========================= */
+
+const observer=new IntersectionObserver(
+
+entries=>{
+
+  entries.forEach(entry=>{
+
+    if(entry.isIntersecting){
+
+      entry.target.classList.add("show");
+
+    }
+
+  });
+
+},
+{threshold:.10}
+
+);
+
+document.querySelectorAll(".reveal")
+.forEach(el=>observer.observe(el));
+
+
+/* =========================
+CARD 3D EFFECT
+========================= */
+
+document.querySelectorAll(".card")
+.forEach(card=>{
+
+  card.addEventListener("mousemove",e=>{
+
+    if(window.innerWidth<700)return;
+
+    const r=card.getBoundingClientRect();
+
+    const x=e.clientX-r.left;
+    const y=e.clientY-r.top;
+
+    const ry=(x/r.width-.5)*4;
+    const rx=-(y/r.height-.5)*4;
+
+    card.style.transform=
+      `translateY(-8px) perspective(700px)
+       rotateX(${rx}deg) rotateY(${ry}deg)`;
+
+  });
+
+  card.addEventListener("mouseleave",()=>{
+
+    card.style.transform="";
+
+  });
+
+});
+
+</script>
+
+</body>
+</html>
